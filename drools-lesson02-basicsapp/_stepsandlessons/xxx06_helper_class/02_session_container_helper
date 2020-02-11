@@ -1,0 +1,32 @@
+KnowledgeSessionHelper.java
+--------------------------------------------------------------------------------
+
+createRuleBase()
+------------------------------------------
+/**
+ * KieServices is factory for container.
+ * KieContainer provides access to stateful or stateless session
+ * 
+ * @return
+ */
+public static KieContainer createRuleBase() {
+	KieServices ks = KieServices.Factory.get();
+	KieContainer kieContainer = ks.getKieClasspathContainer();
+	return kieContainer;
+}
+
+Get statefule or stateless session
+------------------------------------------
+public static StatelessKieSession getStatelessKnowledgeSession(KieContainer kieContainer, String sessionName) {
+	StatelessKieSession kSession = kieContainer.newStatelessKieSession(sessionName);
+
+	return kSession;
+}
+
+public static KieSession getStatefulKnowledgeSession(KieContainer kieContainer, String sessionName) {
+
+	KieSession kSession = kieContainer.newKieSession(sessionName);
+
+	return kSession;
+}
+

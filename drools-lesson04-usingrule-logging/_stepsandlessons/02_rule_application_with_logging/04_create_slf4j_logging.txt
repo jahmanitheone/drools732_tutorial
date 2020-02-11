@@ -1,0 +1,107 @@
+Create Simple Logging Facade For Java (SLF4J)
+File: src/main/resources/logback.xml
+--------------------------------------------------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+  <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <!--<pattern>%d [%t] %-5p %l%n  %m%n</pattern>-->
+      <pattern>%d [%t] %-5p %m%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="org.jbpm" level="info"/>
+  
+  <root level="debug">
+    <appender-ref ref="consoleAppender" />
+  </root>
+
+</configuration>
+
+
+
+Explain logback.xml
+----------------------------------
+Format the output:
+  <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <!--<pattern>%d [%t] %-5p %l%n  %m%n</pattern>-->
+      <pattern>%d [%t] %-5p %m%n</pattern>
+    </encoder>
+  </appender>
+
+What to Log
+  <logger name="org.jbpm" level="info"/> - Only org.jbpm package
+
+Attach the logging appender to system.out in debug mode:
+  <root level="debug">
+    <appender-ref ref="consoleAppender" />
+  </root>
+
+
+Running The DroolsApp With Logging
+--------------------------------------------------------------------------------
+Open file src/main/java/DroolsApp.java
+
+Right-click -> Run As -> Java Application
+
+We see, lots of logging from:
+[main] DEBUG org.kie.api.internal.utils ..
+	Loading kie.conf from  jar:file:/run/media/pchauvet/FBIN/DROOLS_JBPM_7.32.0.Final/jbpm-flow-7.32.0.Final.jar!
+	/META-INF/kie.conf DEBUG org.kie.api.internal.utils.ServiceDiscoveryImpl - 
+	Adding Service org.drools.compiler.kie.builder.impl.KieServicesImpl
+	Adding Service org.drools.core.concurrent.ExecutorProviderImpl
+[main] DEBUG org.drools.compiler.kie
+	Found kmodule: file:/run/media/pchauvet/FDEV/DROOLS732/workspacedrools732_02_setup/drools-lesson02-basicsapp/
+		target/classes/META-INF/kmodule.xml
+	KieModule URL type=file url=/run/media/pchauvet/FDEV/DROOLS732/workspacedrools732_02_setup/drools-lesson02-
+		basicsapp/target/classes
+	Found and used pom.properties /run/media/pchauvet/FDEV/DROOLS732/workspacedrools732_02_setup/drools-lesson02-
+		basicsapp/target/classes/META-INF/maven/pom.properties
+	Discovered classpath module com.sample:hello02:1.0.0-SNAPSHOT
+	State was INACTIVE is now FIRING_ALL_RULES
+
+And these messages from the *.drls:
+	main] DEBUG org.drools.core.common.DefaultAgenda - State was INACTIVE is now FIRING_ALL_RULES
+		Hello World
+		Goodbye cruel world
+
+	[main] DEBUG org.drools.core.common.DefaultAgenda - State was FIRING_ALL_RULES is now HALTING
+	[main] DEBUG org.drools.core.common.DefaultAgenda - State was HALTING is now INACTIVE
+	[main] DEBUG org.drools.core.common.DefaultAgenda - State was INACTIVE is now DISPOSED
+
+
+Change Logging Level: logback.xml
+----------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  .
+  .	
+
+  <logger name="org.jbpm" level="off"/>
+  <logger name="org.drools" level="off"/>
+  <logger name="org.kie" level="off"/>
+  <logger name="com.sample" level="info"/>
+  
+  <root level="off">
+    <appender-ref ref="consoleAppender" />
+  </root>
+
+</configuration>
+
+
+Changes Explained
+----------------------------------
+Loggers are turned off:
+  <logger name="org.jbpm" level="off"/>
+  <logger name="org.drools" level="off"/>
+  <logger name="org.kie" level="off"/>
+
+  <root level="off">
+    <appender-ref ref="consoleAppender" />
+  </root>
+
+The com.sample package uses info logging:
+  <logger name="com.sample" level="info"/>
+

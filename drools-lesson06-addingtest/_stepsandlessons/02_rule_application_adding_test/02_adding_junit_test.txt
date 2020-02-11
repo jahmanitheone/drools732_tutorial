@@ -1,0 +1,64 @@
+Create The Test Logging
+File: src/test/resources/logback-test.xml
+--------------------------------------------------------------------------------
+
+
+Create the test resources/ directory
+------------------------------------------
+Open the src/ directory
+Right click->New Folder->Folder name: test
+Right click->New Folder->Folder name: resources
+
+
+
+Configure src/test/resources/ directory As Source Folder
+-------------------------------------------------------------
+Right click project name: drools-lesson06-addingtest
+Properties->Source->[Add Folder]->src/test/resources
+[Ok]
+[Apply and Close]
+
+See the src/test/resources as a source folder
+
+
+Create Logging For Test
+File: src/test/resources/logback-test.xml
+-------------------------------------------------------------
+Copy: src/main/resources/logback.xml
+To: src/test/resources/logback-test.xml
+
+
+Change log logback-test.xml to debug mode:
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+  <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <!--<pattern>%d [%t] %-5p %l%n  %m%n</pattern>-->
+      <pattern>%d [%t] %-5p %m%n</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="org.jbpm" level="off"/>
+  <logger name="org.drools" level="off"/>
+  <logger name="org.kie" level="degug"/>
+  <logger name="com.sample" level="degug"/>
+  
+  <root level="debug">
+    <appender-ref ref="consoleAppender" />
+  </root>
+
+</configuration>
+
+
+
+
+
+
+
+
+
+
+
+
+

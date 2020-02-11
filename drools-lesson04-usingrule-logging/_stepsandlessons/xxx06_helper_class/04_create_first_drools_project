@@ -1,0 +1,85 @@
+Create First Drools Project
+--------------------------------------------------------------------------------
+
+Add Drools Perspective 
+----------------------------------------------
+Window -> Perspective -> Open Perspective -> Other -> Drools
+A drools icon appears on the toolbar with options:
+New Drools Project
+New Domain Specific Language
+New Decision Table
+
+
+Create New Drools Project
+----------------------------------------------
+Drools Icon -> New Drools Project -> "Create a project and populate it "
+Project name: hello02
+These are filled in:
+	User default location
+	Build the Project using: Maven
+		Group: com.sample
+		Artifact ID: hello02
+		Version: 1.0.0-SNAPSHOT
+	Version: Drools 7.32.0.....
+	Select all: 
+		Add a sample projects
+	Finish
+	
+
+We see these project structure:
+/hello02
+/hello02/src/main/java/com.sample
+/hello02/src/main/java/com/sample/DecisionTableTest.java
+/hello02/src/main/java/com/sample/DroolsTest.java
+/hello02/src/main/java/com/sample/ProcessTest.java
+/hello02/src/main/resources
+/hello02/src/main/resources/logback-test.xml
+/hello02/src/main/resources/com.sample.dtables
+/hello02/src/main/resources/com/sample/dtables/Sample.xls
+/hello02/src/main/resources/com.sample.process
+/hello02/src/main/resources/com/sample/process/sample.bpmn
+/hello02/src/main/resources/com.sample.rules
+/hello02/src/main/resources/com/sample/rules/Sample.drl
+/hello02/src/main/resources/META-INF
+/hello02/src/main/resources/META-INF/maven
+/hello02/src/main/resources/META-INF/maven/pom.properties
+/hello02/src/main/resources/META-INF/kmodule.xml
+
+
+Change Maven Project 
+----------------------------------------------
+User the latest Drools/jBPM version. Change the pom.xml
+<properties>
+	<runtime.version>7.32.0.Final</runtime.version>
+</properties>
+
+Update the project:
+Run As -> Maven Install
+Right click project name: hello2 -> Maven -> Update Project
+Right click project name: hello2 -> Refresh
+
+
+Run DecisionTableTest
+----------------------------------------------
+Right Click -> DecisionTableTest.java -->Run As -> Java Application
+We see  in the console:
+	Hello World
+	Goodbye cruel world
+
+
+Run DroolsTest
+----------------------------------------------
+Right Click -> DroolsTest.java -->Run As -> Java Application
+We see  in the console:
+	Hello World
+	Goodbye cruel world
+
+
+Run ProcessTest
+----------------------------------------------
+Right Click -> ProcessTest.java -->Run As -> Java Application
+We see  in the console:
+	Hello World
+
+	
+	

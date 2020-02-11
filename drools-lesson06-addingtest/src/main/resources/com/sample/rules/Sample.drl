@@ -1,0 +1,24 @@
+package com.sample.rules
+ 
+import com.sample.Message;
+import org.slf4j.Logger;
+
+global com.sample.LogRule logRule;
+
+rule "Hello World"
+    when
+        m : Message( status == Message.HELLO, myMessage : message )
+    then
+    	logRule.debug( drools.getRule().getName(), myMessage );
+    	
+        m.setMessage( "Goodbye cruel world" );
+        m.setStatus( Message.GOODBYE );
+        update( m );
+end
+
+rule "GoodBye"
+    when
+        Message( status == Message.GOODBYE, myMessage : message )
+    then
+       	logRule.debug( drools.getRule().getName(), myMessage );
+end

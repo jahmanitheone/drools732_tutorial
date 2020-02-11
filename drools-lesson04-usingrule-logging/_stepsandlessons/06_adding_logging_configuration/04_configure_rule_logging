@@ -1,0 +1,113 @@
+Using Logging In Drools Rule
+--------------------------------------------------------------------------------
+
+Create Logging Helper
+File: src/main/java/com/sample/LogRule.java
+----------------------------------------------------
+package com.sample;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class LogRule {
+	private static Logger LOG = LoggerFactory.getLogger(LogRule.class);
+
+	public static void info(String rulename, String msg) {
+		LOG.info("Rule(" + rulename + "): " + msg);
+	}
+
+	public static void debug(String rulename, String msg) {
+		LOG.debug("Rule(" + rulename + "): " + msg);
+	}
+
+}
+
+
+Explain LogRule Helper:
+Use org.slf4j.Logger to log rule information.
+
+Create two methods:
+info()
+debug()
+
+
+
+Add Helper As Global Variable:
+File: DroolsAppWithLogging.java
+----------------------------------------------------
+import com.sample.LogRule;
+
+private LogRule logRule;
+
+public static final void main(String[] args) {
+	.
+	KieSession kSession = kContainer.newKieSession("ksession-rules");
+	.
+	kSession.setGlobal("LOG", logRule);
+	.
+	// Run rule
+	Message message = new Message();
+	.
+}
+
+
+Explain setGlobal:
+Add the LogRule object as a global variable.
+
+
+Use global Object In A Rule
+File: src/main/resources/com/sample/rules/Sample.drl
+----------------------------------------------------
+package com.sample.rules
+ 
+import com.sample.Message;
+import org.slf4j.Logger;
+
+global com.sample.LogRule logRule;
+
+rule "Hello World"
+    when
+        m : Message( status == Message.HELLO, myMessage : message )
+    then
+    	logRule.info( drools.getRule().getName(), myMessage );
+    	
+        m.setMessage( "Goodbye cruel world" );
+        m.setStatus( Message.GOODBYE );
+        update( m );
+end
+
+rule "GoodBye"
+    when
+        Message( status == Message.GOODBYE, myMessage : message )
+    then
+       	logRule.info( drools.getRule().getName(), myMessage );
+end
+
+
+
+Explain Rule:
+
+Add global element:
+global com.sample.LogRule logRule;
+
+
+Use global element:
+	logRule.info( drools.getRule().getName(), myMessage );
+
+
+
+Run The Application
+-----------------------------------------------------------
+Open file src/main/java/DroolsAppWithLogging.java
+
+Right-click -> Run As -> Java Application
+
+
+We see:
+2020-02-10 23:39:34,377 [main] INFO  Start application
+2020-02-10 23:39:36,117 [main] INFO  Rule(Hello World): Hello World
+2020-02-10 23:39:36,126 [main] INFO  Rule(GoodBye): Goodbye cruel world
+
+
+
+

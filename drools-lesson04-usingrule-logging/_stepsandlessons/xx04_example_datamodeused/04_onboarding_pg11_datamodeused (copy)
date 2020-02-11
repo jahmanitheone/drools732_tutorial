@@ -1,0 +1,56 @@
+Story
+--------------------------------------------------------------------------------
+Given bank that handles accounts
+When there is account movements
+Then calculate account balance between accounting period of all accounts
+
+Models
+-------------------------
+Bank:
+Account
+
+CashFlow:
+date
+amount
+type
+accoutno
+
+Account:
+accountno
+balance
+
+AccountingPeriod:
+startdate
+enddata
+
+
+
+Relationship
+-------------------------
+A Bank has Accounts
+An Account has Cashflow
+A Cashflow has AccountinPeriod
+
+
+
+Errors While Building
+-------------------------
+Rules Where Not Called:
+	We see:
+		2020-02-03 17:05:40,087 [main] WARN  File 'lesson1/lesson1.drl' is in folder 'lesson1' but 
+		declares package 'cours'. It is advised to have a correspondance between package and folder 
+		names.
+
+	Issue:
+		Drools DRL file lesson1.drl had this package:
+		
+		package cours
+	Fix DRL file:
+		package lesson1
+		
+		Package should be lesson1 since kmodeule.xml points to lesson1:
+			<kbase name="lesson1" packages="lesson1">
+				<ksession name="lesson1-session"/>
+			</kbase>		
+
+

@@ -1,0 +1,86 @@
+Setup Drools Project
+--------------------------------------------------------------------------------
+
+Drools Story:
+--------------------------------
+when the messagetype is a HELLO message
+then
+	print hello message
+	update() drooles engine
+
+
+First Drool Rules: src/main/resources/Sample.drl
+--------------------------------
+package com.sample.rules
+ 
+import com.sample.Message;
+ 
+rule "Hello World"
+    when
+        m : Message( status == Message.HELLO, myMessage : message )
+    then
+        System.out.println( myMessage );
+        m.setMessage( "Goodbye cruel world" );
+        m.setStatus( Message.GOODBYE );
+        update( m );
+end
+
+rule "GoodBye"
+    when
+        Message( status == Message.GOODBYE, myMessage : message )
+    then
+        System.out.println( myMessage );
+end
+
+
+
+Create Drools Rule Environment
+--------------------------------
+In maven project: src/main/resources
+Create package: com.sample.rules
+
+
+
+Drools Rule Explained
+--------------------------------
+In package com.sample.rules create rule file (there can be more): 
+Sample.drl
+
+Add model reference:
+package com.sample.rules
+ 
+Import model:
+import com.sample.Message;
+
+
+when message is hello (m is binding to Message object)
+        m : Message( status == Message.HELLO, myMessage : message )
+and when we have message (myMessage is binding to data member message);
+	myMessage : message
+then 
+	Print message (binding myMessage)
+	Set message object (m):
+		Set message to "Goodbye cruel world"
+		Set message to Goodby
+	Update
+		Drools engine has to be aware of data change 
+		Call update() with update data:
+			update( m );
+
+
+
+Drools Rule Explained- Create Drools Rule For Goodbye
+--------------------------------
+When the message is a GOODBYE message
+	print goodbye message
+
+rule "GoodBye"
+    when
+        Message( status == Message.GOODBYE, myMessage : message )
+    then
+        System.out.println( myMessage );
+end
+
+
+
+

@@ -1,0 +1,72 @@
+Using Logging In Application
+File: src/main/java/com/sample/DroolsAppWithLogging.java
+--------------------------------------------------------------------------------
+package com.sample;
+
+import org.kie.api.KieServices;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+/**
+ * This is a sample class to launch a rule.
+ */
+public class DroolsAppWithLogging {
+
+    public static final void main(String[] args) {
+        try {
+	    Logger logger = LoggerFactory.getLogger(DroolsAppWithLogging.class);
+
+            // load up the knowledge base
+	    	KieServices ks = KieServices.Factory.get();
+    	    KieContainer kContainer = ks.getKieClasspathContainer();
+        	KieSession kSession = kContainer.newKieSession("ksession-rules");
+        	
+            // go !
+            Message message = new Message();
+            message.setMessage("Hello World");
+            message.setStatus(Message.HELLO);
+            kSession.insert(message);
+            kSession.fireAllRules();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
+
+}
+
+
+
+Add Logging To Application
+-----------------------------------------------------------
+Import Logger:
+	import org.slf4j.Logger;
+	import org.slf4j.LoggerFactory;
+
+Use logger:
+	Logger logger = LoggerFactory.getLogger(DroolsAppWithLogging.class);
+
+
+Log a message:
+	public static final void main(String[] args
+		LOG.info("Start application");
+
+
+
+Run The Application
+-----------------------------------------------------------
+Open file src/main/java/DroolsAppWithLogging.java
+
+Right-click -> Run As -> Java Application
+
+
+We see:
+2020-02-10 22:05:52,905 [main] INFO  Start application
+Hello World
+Goodbye cruel world
+
+
+
+
