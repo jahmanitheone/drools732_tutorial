@@ -1,0 +1,20 @@
+Application Story
+--------------------------------------------------------------------------------
+
+Get Drools To print Hello Message
+------------------------------------------
+Given 
+	messagetype=HELLO and
+	message
+then 
+	print goodbye message
+
+
+Get Drools To Print Message
+------------------------------------------
+Given 
+	messagetype=GOODBYE and
+	message
+then 
+	print goodbye message
+

@@ -1,0 +1,23 @@
+package com.aikiinc.rules
+ 
+import com.aikiinc.domain.Message;
+
+global com.aikiinc.util.LogRule logRule;
+
+rule "Hello World"
+    when
+        m : Message( status == Message.HELLO, myMessage : message )
+    then
+    	logRule.info( drools.getRule().getName(), myMessage );
+    	
+        m.setMessage( "Goodbye cruel world" );
+        m.setStatus( Message.GOODBYE );
+        update( m );
+end
+
+rule "GoodBye"
+    when
+        Message( status == Message.GOODBYE, myMessage : message )
+    then
+       	logRule.info( drools.getRule().getName(), myMessage );
+end

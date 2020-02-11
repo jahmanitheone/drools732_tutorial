@@ -1,19 +1,21 @@
 Sample KIE Rules And Configuration And Execution
-File: src/main/java/DroolsApp.java
+File: src/main/java/com/aikiinc/app/DroolsApp.java
 --------------------------------------------------------------------------------
 public static final void main(String[] args) {
 try {
-	// load up the knowledge base
-	KieServices ks = KieServices.Factory.get();
-	KieContainer kContainer = ks.getKieClasspathContainer();
-	KieSession kSession = kContainer.newKieSession("ksession-rules");
-
-	// go !
-	Message message = new Message();
-	message.setMessage("Hello World");
-	message.setStatus(Message.HELLO);
-	kSession.insert(message);
-	kSession.fireAllRules();
+    	System.out.println("Config KIE");
+        // load up the knowledge base
+        KieServices ks = KieServices.Factory.get();
+	    KieContainer kContainer = ks.getKieClasspathContainer();
+    	KieSession kSession = kContainer.newKieSession("ksession-rules");
+    	
+    	System.out.println("Fire all rules:");
+        Message message = new Message();
+        message.setMessage("Hello World");
+        message.setStatus(Message.HELLO);
+        
+        kSession.insert(message);
+        kSession.fireAllRules();
 } catch (Throwable t) {
     t.printStackTrace();
 }
@@ -56,9 +58,7 @@ Open file src/main/java/DroolsApp.java
 Right-click -> Run as -> Java Application
 
 We see these messages from the *.drls:
+	Config KIE
+	Fire all rules:
 	Hello World
 	Goodbye cruel world
-
-
-
-

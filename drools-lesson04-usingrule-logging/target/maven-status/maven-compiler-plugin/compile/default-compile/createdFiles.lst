@@ -1,0 +1,4 @@
+com/aikiinc/app/DroolsAppWithLogging.class
+com/aikiinc/app/DroolsApp.class
+com/aikiinc/domain/Message.class
+com/aikiinc/util/LogRule.class

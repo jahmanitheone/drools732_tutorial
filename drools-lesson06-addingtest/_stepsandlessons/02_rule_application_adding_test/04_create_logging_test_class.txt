@@ -1,9 +1,10 @@
 Create The Junit Test For Drools Application
-File: src/test/java/DroolsAppWithLoggingTest.java
+File: src/test/java/com/aikiinc/app/DroolsAppWithLoggingTest.java
 --------------------------------------------------------------------------------
 Select folder: src/test/java
 Right click -> New -> Junit Test Case
-Select: Newe Junit4 Test
+Select: New Junit4 Test
+Package: com.aikiinc.app
 Name: DroolsAppWithLoggingTest.java
 
 import static org.junit.Assert.*;
@@ -22,7 +23,7 @@ public class DroolsAppWithLoggingTest {
 
 Add @BeforeClass method
 ---------------------------------------
-package com.sample;
+package com.aikiinc.app;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -71,8 +72,8 @@ Right click name -> runDroolWithTest()
 Run As -> Junit Test
 
 See the log response:
-[main] DEBUG Adding Service org.kie.scanner.MavenClassLoaderResolver
-[main] DEBUG Loading kie.conf from  jar:file:/home/pchauvet/.m2/org/drools/drools-compiler/[main] [main] DEBUG Adding Service org.drools.compiler.builder.impl.KnowledgeBuilderFactoryServiceImpl
+[main] INFO  BeforeClass() Config KIE
+[main] INFO  Fire all rules:
 [main] INFO  Rule(Hello World): Hello World
 [main] INFO  Rule(GoodBye): Goodbye cruel world
 
@@ -105,10 +106,12 @@ Right click name -> runDroolWithTest()
 Run As -> Junit Test
 
 
-See degug message mode:
-[main] DEBUG Adding Service org.drools.compiler.builder.impl.KnowledgeBuilderFactoryServiceImpl
+See debug message mode:
+[main] INFO  BeforeClass() Config KIE
+[main] INFO  Fire all rules:
 [main] DEBUG Rule(Hello World): Hello World
 [main] DEBUG Rule(GoodBye): Goodbye cruel world
+
 
 
 

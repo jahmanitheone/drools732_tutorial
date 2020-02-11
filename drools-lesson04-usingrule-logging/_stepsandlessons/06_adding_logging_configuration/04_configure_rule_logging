@@ -2,9 +2,9 @@ Using Logging In Drools Rule
 --------------------------------------------------------------------------------
 
 Create Logging Helper
-File: src/main/java/com/sample/LogRule.java
+File: src/main/java/com/aikiinc/util/LogRule.java
 ----------------------------------------------------
-package com.sample;
+package com.aikiinc.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +35,7 @@ debug()
 Add Helper As Global Variable:
 File: DroolsAppWithLogging.java
 ----------------------------------------------------
-import com.sample.LogRule;
+import com.aikiinc.util.LogRule;
 
 private LogRule logRule;
 
@@ -56,14 +56,14 @@ Add the LogRule object as a global variable.
 
 
 Use global Object In A Rule
-File: src/main/resources/com/sample/rules/Sample.drl
+File: src/main/resources/com/aikiinc/rules/Sample.drl
 ----------------------------------------------------
-package com.sample.rules
+package com.aikiinc.rules
  
-import com.sample.Message;
+import com.aikiinc.domain.Message;
 import org.slf4j.Logger;
 
-global com.sample.LogRule logRule;
+global com.aikiinc.util.LogRule logRule;
 
 rule "Hello World"
     when
@@ -88,7 +88,7 @@ end
 Explain Rule:
 
 Add global element:
-global com.sample.LogRule logRule;
+global com.aikiinc.util.LogRule logRule;
 
 
 Use global element:
@@ -98,7 +98,7 @@ Use global element:
 
 Run The Application
 -----------------------------------------------------------
-Open file src/main/java/DroolsAppWithLogging.java
+Open file src/main/java/com/aikiinc/app/DroolsAppWithLogging.java
 
 Right-click -> Run As -> Java Application
 

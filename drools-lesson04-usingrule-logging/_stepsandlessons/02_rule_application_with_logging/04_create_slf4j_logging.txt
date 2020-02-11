@@ -6,7 +6,6 @@ File: src/main/resources/logback.xml
 
   <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-      <!--<pattern>%d [%t] %-5p %l%n  %m%n</pattern>-->
       <pattern>%d [%t] %-5p %m%n</pattern>
     </encoder>
   </appender>
@@ -26,7 +25,6 @@ Explain logback.xml
 Format the output:
   <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-      <!--<pattern>%d [%t] %-5p %l%n  %m%n</pattern>-->
       <pattern>%d [%t] %-5p %m%n</pattern>
     </encoder>
   </appender>
@@ -59,7 +57,7 @@ We see, lots of logging from:
 		basicsapp/target/classes
 	Found and used pom.properties /run/media/pchauvet/FDEV/DROOLS732/workspacedrools732_02_setup/drools-lesson02-
 		basicsapp/target/classes/META-INF/maven/pom.properties
-	Discovered classpath module com.sample:hello02:1.0.0-SNAPSHOT
+	Discovered classpath module com.aikiinc:hello02:1.0.0-SNAPSHOT
 	State was INACTIVE is now FIRING_ALL_RULES
 
 And these messages from the *.drls:
@@ -82,7 +80,7 @@ Change Logging Level: logback.xml
   <logger name="org.jbpm" level="off"/>
   <logger name="org.drools" level="off"/>
   <logger name="org.kie" level="off"/>
-  <logger name="com.sample" level="info"/>
+  <logger name="com.aikiinc" level="info"/>
   
   <root level="off">
     <appender-ref ref="consoleAppender" />
@@ -102,6 +100,6 @@ Loggers are turned off:
     <appender-ref ref="consoleAppender" />
   </root>
 
-The com.sample package uses info logging:
-  <logger name="com.sample" level="info"/>
+The com.aikiinc package uses info logging:
+  <logger name="com.aikiinc" level="info"/>
 

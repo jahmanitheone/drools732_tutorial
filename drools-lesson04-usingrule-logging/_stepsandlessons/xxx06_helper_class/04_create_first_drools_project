@@ -17,7 +17,7 @@ Project name: hello02
 These are filled in:
 	User default location
 	Build the Project using: Maven
-		Group: com.sample
+		Group: com.aikiinc
 		Artifact ID: hello02
 		Version: 1.0.0-SNAPSHOT
 	Version: Drools 7.32.0.....
@@ -28,17 +28,17 @@ These are filled in:
 
 We see these project structure:
 /hello02
-/hello02/src/main/java/com.sample
+/hello02/src/main/java/com.aikiinc
 /hello02/src/main/java/com/sample/DecisionTableTest.java
 /hello02/src/main/java/com/sample/DroolsTest.java
 /hello02/src/main/java/com/sample/ProcessTest.java
 /hello02/src/main/resources
 /hello02/src/main/resources/logback-test.xml
-/hello02/src/main/resources/com.sample.dtables
+/hello02/src/main/resources/com.aikiinc.dtables
 /hello02/src/main/resources/com/sample/dtables/Sample.xls
-/hello02/src/main/resources/com.sample.process
+/hello02/src/main/resources/com.aikiinc.process
 /hello02/src/main/resources/com/sample/process/sample.bpmn
-/hello02/src/main/resources/com.sample.rules
+/hello02/src/main/resources/com.aikiinc.rules
 /hello02/src/main/resources/com/sample/rules/Sample.drl
 /hello02/src/main/resources/META-INF
 /hello02/src/main/resources/META-INF/maven

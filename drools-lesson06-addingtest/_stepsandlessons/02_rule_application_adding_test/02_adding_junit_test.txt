@@ -34,17 +34,16 @@ Change log logback-test.xml to debug mode:
 
   <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
-      <!--<pattern>%d [%t] %-5p %l%n  %m%n</pattern>-->
       <pattern>%d [%t] %-5p %m%n</pattern>
     </encoder>
   </appender>
 
   <logger name="org.jbpm" level="off"/>
   <logger name="org.drools" level="off"/>
-  <logger name="org.kie" level="degug"/>
-  <logger name="com.sample" level="degug"/>
+  <logger name="org.kie" level="off"/>
+  <logger name="com.aikiinc" level="degug"/>
   
-  <root level="debug">
+  <root level="off">
     <appender-ref ref="consoleAppender" />
   </root>
 
