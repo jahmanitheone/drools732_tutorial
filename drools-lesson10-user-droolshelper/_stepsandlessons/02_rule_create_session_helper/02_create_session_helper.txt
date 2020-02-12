@@ -1,0 +1,87 @@
+Add Session Helper Class
+File: src/com/aikiinc/app/KnowledgeSessionHelper.java
+--------------------------------------------------------------------------------
+public class KnowledgeSessionHelper {
+
+	/**
+	 * KieServer is factory for container. KieContainer provides access to stateful
+	 * or stateless session
+	 * 
+	 * @return
+	 */
+	public static KieContainer createRuleBase() {
+		KieServices ks = KieServices.Factory.get();
+		KieContainer kieContainer = ks.getKieClasspathContainer();
+		return kieContainer;
+	}
+
+	public static StatelessKieSession getStatelessKnowledgeSession(KieContainer kieContainer, String sessionName) {
+		StatelessKieSession kSession = kieContainer.newStatelessKieSession(sessionName);
+
+		return kSession;
+	}
+
+	public static KieSession getStatefulKnowledgeSession(KieContainer kieContainer, String sessionName) {
+
+		KieSession kSession = kieContainer.newKieSession(sessionName);
+
+		return kSession;
+	}
+
+}
+
+
+
+Update Drools Application To Use Helper Class
+File: src/com/aikiinc/app/DroolsAppWithLogging.java
+------------------------------------------------------------------------
+
+Use helper class to create rule base and obtain sessions:
+
+public DroolsAppWithLogging() {
+	try {
+		LOG.info("DroolsAppWithLogging() Config KIE");
+
+		KieContainer kieContainer = KnowledgeSessionHelper.createRuleBase();
+		kSession = KnowledgeSessionHelper.getStatefulKnowledgeSession(kieContainer, "ksession-rules");
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+}
+
+
+Run Test With Debug Message
+---------------------------------------
+Change Sample.drl to: 
+logRule.debug
+
+rule "Hello World"
+    when
+        m : Message( status == Message.HELLO, myMessage : message )
+    then
+    	logRule.debug( drools.getRule().getName(), myMessage );
+    	
+        m.setMessage( "Goodbye cruel world" );
+        m.setStatus( Message.GOODBYE );
+        update( m );
+end
+
+rule "GoodBye"
+    when
+        Message( status == Message.GOODBYE, myMessage : message )
+    then
+      	logRule.debug( drools.getRule().getName(), myMessage );
+end
+
+
+Right click name -> runDroolWithTest()
+Run As -> Junit Test
+
+
+See debug message mode:
+[main] INFO  BeforeClass() Config KIE
+[main] INFO  Fire all rules:
+[main] DEBUG Rule(Hello World): Hello World
+[main] DEBUG Rule(GoodBye): Goodbye cruel world
+
+

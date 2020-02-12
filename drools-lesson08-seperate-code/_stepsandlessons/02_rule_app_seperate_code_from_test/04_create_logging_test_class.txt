@@ -1,0 +1,117 @@
+Create The Junit Test For Drools Application
+File: src/test/java/com/aikiinc/app/DroolsAppWithLoggingTest.java
+--------------------------------------------------------------------------------
+Select folder: src/test/java
+Right click -> New -> Junit Test Case
+Select: New Junit4 Test
+Package: com.aikiinc.app
+Name: DroolsAppWithLoggingTest.java
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class DroolsAppWithLoggingTest {
+
+	@Test
+	public void test() {
+		fail("Not yet implemented");
+	}
+
+}
+
+
+Add @BeforeClass method
+---------------------------------------
+package com.aikiinc.app;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.kie.api.KieServices;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
+
+public class DroolsAppWithLoggingTest {
+	private static KieServices ks;
+	private static KieContainer kContainer;
+	private static KieSession kSession;
+	private static LogRule logRule;
+	
+	@BeforeClass
+	public static void beforeClass() {
+		// load up the knowledge base
+		ks = KieServices.Factory.get();
+		kContainer = ks.getKieClasspathContainer();
+		kSession = kContainer.newKieSession("ksession-rules");
+	}
+
+}
+
+
+Add @Test method: runDroolWithTest()
+---------------------------------------
+@Test
+public void runDroolWithTest() {
+	try {
+		kSession.setGlobal("LOG", logRule);
+		
+		Message message = new Message();
+		message.setMessage("Hello World");
+		message.setStatus(Message.HELLO);
+		kSession.insert(message);
+		kSession.fireAllRules();
+	} catch (Throwable t) {
+		t.printStackTrace();
+	}
+}
+
+
+Run Test
+---------------------------------------
+Right click name -> runDroolWithTest()
+Run As -> Junit Test
+
+See the log response:
+[main] INFO  BeforeClass() Config KIE
+[main] INFO  Fire all rules:
+[main] INFO  Rule(Hello World): Hello World
+[main] INFO  Rule(GoodBye): Goodbye cruel world
+
+
+Run Test With Debug Message
+---------------------------------------
+Change Sample.drl to: 
+logRule.debug
+
+rule "Hello World"
+    when
+        m : Message( status == Message.HELLO, myMessage : message )
+    then
+    	logRule.debug( drools.getRule().getName(), myMessage );
+    	
+        m.setMessage( "Goodbye cruel world" );
+        m.setStatus( Message.GOODBYE );
+        update( m );
+end
+
+rule "GoodBye"
+    when
+        Message( status == Message.GOODBYE, myMessage : message )
+    then
+      	logRule.debug( drools.getRule().getName(), myMessage );
+end
+
+
+Right click name -> runDroolWithTest()
+Run As -> Junit Test
+
+
+See debug message mode:
+[main] INFO  BeforeClass() Config KIE
+[main] INFO  Fire all rules:
+[main] DEBUG Rule(Hello World): Hello World
+[main] DEBUG Rule(GoodBye): Goodbye cruel world
+
+
+
+

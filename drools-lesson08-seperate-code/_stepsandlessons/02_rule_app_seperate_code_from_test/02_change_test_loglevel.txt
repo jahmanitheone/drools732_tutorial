@@ -1,0 +1,136 @@
+Change The Test Log Lever
+File: src/test/resources/logback-test.xml
+--------------------------------------------------------------------------------
+
+Add logging for module name and line number: logback-test.xml
+------------------------------------------------------------------------
+<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+  <encoder>
+    <pattern>%d [%t] %-5p %logger{2}:%line %m%n</pattern>
+  </encoder>
+</appender>
+
+%logger{2}:%line shows the package and the line number for the code.
+
+
+
+Separate Code From Test 
+------------------------------------------------------------------------
+File: src/main/java/DroolsAppWithLogging.java
+
+This is the application code:
+
+package com.aikiinc.app;
+
+import org.kie.api.KieServices;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.aikiinc.domain.Message;
+import com.aikiinc.util.LogRule;
+
+/**
+ * This is a sample class to launch a rule.
+ */
+public class DroolsAppWithLogging {
+	private static Logger LOG = LoggerFactory.getLogger(DroolsAppWithLogging.class);
+	private KieServices ks;
+	private KieContainer kContainer;
+	private KieSession kSession;
+	private LogRule logRule;
+	
+	public DroolsAppWithLogging() {
+		try {
+			LOG.info("DroolsAppWithLogging() Config KIE");
+
+			// load up the knowledge base
+			ks = KieServices.Factory.get();
+			kContainer = ks.getKieClasspathContainer();
+			kSession = kContainer.newKieSession("ksession-rules");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void run() {
+		try {
+			LOG.info("Fire all rules:");
+			kSession.setGlobal("LOG", logRule);
+			
+			// go !
+			Message message = new Message();
+			message.setMessage("Hello World");
+			message.setStatus(Message.HELLO);
+			kSession.insert(message);
+			kSession.fireAllRules();
+		} catch (Throwable t) {
+			t.printStackTrace();
+		}
+	}
+
+}
+
+
+
+Explain code:
+-----------------------------------
+Configure KIE service:
+public DroolsAppWithLogging() {
+	try {
+		LOG.info("DroolsAppWithLogging() Config KIE");
+
+		// load up the knowledge base
+		ks = KieServices.Factory.get();
+		kContainer = ks.getKieClasspathContainer();
+		kSession = kContainer.newKieSession("ksession-rules");
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+}
+
+Run the drools rule:
+public void run() {
+	try {
+		LOG.info("Fire all rules:");
+		kSession.setGlobal("LOG", logRule);
+		
+		// go !
+		Message message = new Message();
+		message.setMessage("Hello World");
+		message.setStatus(Message.HELLO);
+		
+		kSession.insert(message);
+		kSession.fireAllRules();
+	} catch (Throwable t) {
+		t.printStackTrace();
+	}
+}
+
+
+
+Create Test To Run 
+-----------------------------------
+File: src/test/java/DroolsAppWithLoggingTest.java
+
+Set up the application:
+@BeforeClass
+public static void beforeClass() {
+	LOG.info("BeforeClass() Config KIE");
+	droolsAppWithLogging = new DroolsAppWithLogging();
+}
+
+Run the drools rule:
+@Test
+public void runDrool() {
+	try {
+		LOG.info("runDroolWithTest");
+
+		droolsAppWithLogging.run();
+	} catch (Throwable t) {
+		t.printStackTrace();
+	}
+}
+
+
